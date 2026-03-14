@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Package, ShoppingCart, Tag, LogOut, ArrowRight } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingCart, Tag, LogOut, ArrowRight, Menu, X } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import './AdminPages.css';
 
 export default function AdminLayout() {
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -30,6 +31,11 @@ export default function AdminLayout() {
     return () => subscription.unsubscribe();
   }, [navigate]);
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
     navigate('/admin/login');
@@ -52,7 +58,22 @@ export default function AdminLayout() {
 
   return (
     <div className="admin-layout">
-      <aside className="admin-sidebar glass">
+      {/* Mobile Toggle Button */}
+      <button 
+        className="admin-menu-toggle"
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        aria-label="Toggle Admin Menu"
+      >
+        {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
+
+      {/* Mobile Overlay */}
+      <div 
+        className={`admin-sidebar-overlay ${mobileMenuOpen ? 'open' : ''}`}
+        onClick={() => setMobileMenuOpen(false)}
+      />
+
+      <aside className={`admin-sidebar glass ${mobileMenuOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
           <span className="en sidebar-logo">TAGMESH</span>
           <span className="sidebar-badge">Admin</span>

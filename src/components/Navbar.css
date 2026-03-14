@@ -8,13 +8,14 @@
   display: flex;
   align-items: center;
   transition: all var(--transition-base);
-  background: transparent;
+  background: var(--bg-primary);
+  border-bottom: 1px solid transparent;
 }
 
 .navbar-scrolled {
-  background: rgba(10, 10, 10, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-color);
   box-shadow: var(--shadow-sm);
 }
@@ -29,26 +30,27 @@
 .navbar-logo {
   display: flex;
   align-items: baseline;
-  gap: 6px;
+  gap: 8px;
 }
 
 .logo-text {
   font-family: var(--font-en);
   font-size: 1.5rem;
-  font-weight: 800;
-  letter-spacing: 3px;
+  font-weight: 900;
+  letter-spacing: 2px;
   color: var(--text-primary);
-  transition: color var(--transition-fast);
+  transition: opacity var(--transition-fast);
 }
 
 .logo-text-ar {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--accent-gold);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
-.navbar-logo:hover .logo-text {
-  color: var(--accent-gold);
+.navbar-logo:hover .logo-text,
+.navbar-logo:hover .logo-text-ar {
+  opacity: 0.7;
 }
 
 .navbar-links {
@@ -73,13 +75,14 @@
   right: 0;
   width: 0;
   height: 2px;
-  background: var(--accent-gold);
+  background: var(--text-primary);
   transition: width var(--transition-base);
 }
 
 .nav-link:hover,
 .nav-link.active {
   color: var(--text-primary);
+  font-weight: 600;
 }
 
 .nav-link.active::after,
@@ -106,20 +109,20 @@
 }
 
 .cart-btn:hover {
-  background: rgba(200, 169, 126, 0.1);
-  color: var(--accent-gold);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .cart-badge {
   position: absolute;
-  top: 2px;
-  left: 2px;
+  top: 0;
+  left: 0;
   min-width: 18px;
   height: 18px;
-  background: var(--accent-gold);
-  color: #0a0a0a;
+  background: var(--text-primary);
+  color: var(--bg-primary);
   font-size: 0.7rem;
-  font-weight: 800;
+  font-weight: 700;
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
@@ -159,8 +162,9 @@
 
 .mobile-link:hover,
 .mobile-link.active {
-  background: rgba(200, 169, 126, 0.1);
-  color: var(--accent-gold);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-weight: 700;
 }
 
 @media (max-width: 768px) {

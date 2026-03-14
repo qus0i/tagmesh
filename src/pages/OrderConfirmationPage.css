@@ -25,10 +25,7 @@
 .confirmation-title {
   font-size: 2rem;
   font-weight: 900;
-  background: linear-gradient(135deg, var(--text-primary), var(--accent-gold));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text-primary);
 }
 
 .confirmation-message {
@@ -57,7 +54,7 @@
 .order-number {
   font-weight: 800;
   font-size: 1.1rem;
-  color: var(--accent-gold);
+  color: var(--text-primary);
   font-family: var(--font-en);
 }
 

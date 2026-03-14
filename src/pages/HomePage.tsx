@@ -37,7 +37,7 @@ export default function HomePage() {
             </h1>
             <p className="hero-subtitle">خليك مطقمش</p>
             <p className="hero-desc">
-              ستايل أوروبي بطعم أردني — أحلى الأواعي بأسعار تهبل وتوصيل لعندك ع الباب 🔥
+              ستايل أوروبي بطعم أردني — أحلى الأواعي بأسعار بتجنن وتوصيل لعندك ع الباب 🔥
             </p>
             <div className="hero-actions">
               <Link to="/products" className="btn btn-primary btn-lg">
@@ -163,7 +163,7 @@ export default function HomePage() {
       <section className="section brand-section">
         <div className="container">
           <div className="brand-story glass">
-            <div className="brand-story-pattern" />
+
             <motion.div
               className="brand-story-content"
               initial={{ opacity: 0, x: -30 }}

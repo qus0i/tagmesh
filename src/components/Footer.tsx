@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Instagram, MessageCircle, MapPin, Clock, Truck } from 'lucide-react';
+import { Instagram, MessageCircle, MapPin, Clock, Truck, Linkedin } from 'lucide-react';
 import './Footer.css';
 
 export default function Footer() {
@@ -22,7 +22,7 @@ export default function Footer() {
               <a href="https://instagram.com/tagmesh.jo" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="Instagram">
                 <Instagram size={20} />
               </a>
-              <a href="https://wa.me/962" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="WhatsApp">
+              <a href="https://wa.me/962779005522" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="WhatsApp">
                 <MessageCircle size={20} />
               </a>
             </div>
@@ -56,6 +56,12 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <p>© {new Date().getFullYear()} TAGMESH | طقمش — جميع الحقوق محفوظة</p>
+          <p className="footer-powered-by" dir="ltr">
+            <a href="https://www.linkedin.com/in/qusai-kanaan-385172288/" target="_blank" rel="noopener noreferrer" className="powered-linkedin-icon" aria-label="LinkedIn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 72 72"><rect width="72" height="72" rx="8" fill="#555555"/><path d="M20.5 29h7v22h-7zM24 18.5a4 4 0 110 8 4 4 0 010-8zM33 29h6.7v3h.1c.9-1.8 3.2-3.6 6.6-3.6 7 0 8.3 4.6 8.3 10.6V51h-7V40.6c0-2.5 0-5.7-3.5-5.7s-4 2.7-4 5.5V51h-7V29z" fill="#fff"/></svg>
+            </a>
+            Powered by <a href="https://www.linkedin.com/in/qusai-kanaan-385172288/" target="_blank" rel="noopener noreferrer" className="enqust-link">Qusai</a>
+          </p>
         </div>
       </div>
     </footer>

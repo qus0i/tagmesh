@@ -117,7 +117,7 @@
 .product-price-current {
   font-size: 1.8rem;
   font-weight: 800;
-  color: var(--accent-gold);
+  color: var(--text-primary);
 }
 
 .product-price-old {
@@ -170,8 +170,8 @@
 }
 
 .color-option.active {
-  border-color: var(--accent-gold);
-  background: rgba(200, 169, 126, 0.1);
+  border-color: var(--text-primary);
+  background: var(--bg-secondary);
 }
 
 .color-swatch {
@@ -211,9 +211,9 @@
 }
 
 .size-option.active {
-  background: var(--accent-gold);
-  border-color: var(--accent-gold);
-  color: #0a0a0a;
+  background: var(--text-primary);
+  border-color: var(--text-primary);
+  color: var(--bg-primary);
 }
 
 .size-option.disabled {

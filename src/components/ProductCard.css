@@ -6,8 +6,9 @@
 }
 
 .product-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-accent);
 }
 
 .product-card.out-of-stock {
@@ -48,7 +49,7 @@
 .product-card-badges {
   position: absolute;
   top: var(--space-sm);
-  right: var(--space-sm);
+  left: var(--space-sm); /* Move to left side for RTL layout */
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -67,11 +68,11 @@
 
 .product-card-overlay span {
   padding: var(--space-sm) var(--space-lg);
-  background: var(--accent-gold);
-  color: #0a0a0a;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   font-weight: 700;
   font-size: 0.85rem;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   transform: translateY(10px);
   transition: transform var(--transition-base);
 }
@@ -111,7 +112,7 @@
 .product-card-price {
   font-weight: 700;
   font-size: 1rem;
-  color: var(--accent-gold);
+  color: var(--text-primary);
 }
 
 .product-card-price-sale {

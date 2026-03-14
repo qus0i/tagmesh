@@ -326,20 +326,25 @@ export async function uploadProductImage(file: File): Promise<string> {
 // ============================================
 
 export async function adminGetDashboardStats() {
-  const [ordersResult, productsResult] = await Promise.all([
+  const [ordersResult, productsResult, orderItemsResult] = await Promise.all([
     supabase.from('orders').select('id, status, total, created_at'),
     supabase.from('products').select('id, variants:product_variants(id, stock_quantity)'),
+    supabase.from('order_items').select('product_name, quantity, unit_price, order_id')
   ]);
 
   const orders = ordersResult.data || [];
   const products = productsResult.data || [];
+  const orderItems = orderItemsResult.data || [];
 
+  // Summary stats
   const totalOrders = orders.length;
   const pendingOrders = orders.filter((o) => o.status === 'pending').length;
-  const totalRevenue = orders
-    .filter((o) => o.status !== 'cancelled')
-    .reduce((sum, o) => sum + Number(o.total), 0);
+  
+  // Calculate total confirmed/delivered revenue
+  const validOrders = orders.filter((o) => o.status !== 'cancelled');
+  const totalRevenue = validOrders.reduce((sum, o) => sum + Number(o.total || 0), 0);
 
+  // Low stock calculation
   let lowStockItems = 0;
   products.forEach((p: any) => {
     p.variants?.forEach((v: any) => {
@@ -347,5 +352,61 @@ export async function adminGetDashboardStats() {
     });
   });
 
-  return { totalOrders, pendingOrders, totalRevenue, lowStockItems, totalProducts: products.length };
+  // 1. Orders by Status
+  const ordersByStatus = {
+    pending: orders.filter((o) => o.status === 'pending').length,
+    confirmed: orders.filter((o) => o.status === 'confirmed').length,
+    shipped: orders.filter((o) => o.status === 'shipped').length,
+    delivered: orders.filter((o) => o.status === 'delivered').length,
+    cancelled: orders.filter((o) => o.status === 'cancelled').length,
+  };
+
+  // 2. Daily Revenue (Last 7 Days)
+  const last7Days = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() - (6 - i));
+    return d.toISOString().split('T')[0];
+  });
+
+  const dailyRevenue = last7Days.map(dateStr => {
+    // Orders matching exactly this date
+    const dayOrders = validOrders.filter(o => {
+      const orderDate = new Date(o.created_at).toISOString().split('T')[0];
+      return orderDate === dateStr;
+    });
+    
+    const revenue = dayOrders.reduce((sum, o) => sum + Number(o.total || 0), 0);
+    
+    // Format date for display: DD/MM
+    const [_, month, day] = dateStr.split('-');
+    return { date: `${day}/${month}`, revenue };
+  });
+
+  // 3. Top Products
+  const validOrderIds = new Set(validOrders.map(o => o.id));
+  const validOrderItems = orderItems.filter(item => validOrderIds.has(item.order_id));
+  
+  const productSales: Record<string, number> = {};
+  validOrderItems.forEach(item => {
+    if (item.product_name) {
+      if (!productSales[item.product_name]) productSales[item.product_name] = 0;
+      productSales[item.product_name] += item.quantity;
+    }
+  });
+
+  const topProducts = Object.entries(productSales)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5)
+    .map(([name, quantity]) => ({ name, quantity }));
+
+  return { 
+    totalOrders, 
+    pendingOrders, 
+    totalRevenue, 
+    lowStockItems, 
+    totalProducts: products.length,
+    ordersByStatus,
+    dailyRevenue,
+    topProducts
+  };
 }
